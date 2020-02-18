@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect, useRef } from "react";
 import { gql } from "apollo-boost";
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/react-hooks";
 import {
   SizeContainer,
   CurrentSize,
@@ -9,35 +9,26 @@ import {
   Dropdown,
   DropdownItem,
 } from "./SizeInput.styles";
+import { useApolloClient } from "@apollo/react-hooks";
 
 const QUERY = gql`
-  query searchPanel {
-    searchPanel {
-      sizeInput
-    }
-  }
-`;
-
-const MUTATION = gql`
-  mutation UpdateSizeInput($input: String!) {
-    updateSizeInput(input: $input)
+  query {
+    sizeInput @client
   }
 `;
 
 const SizeInput = () => {
+  const client = useApolloClient();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const sizeDropdown = useRef(null);
   const { data } = useQuery(QUERY);
-  const [updateSizeInput] = useMutation(MUTATION, {
-    refetchQueries: ["searchPanel"],
-  });
 
   useEffect(() => {
     const handleClick = e => {
       if (dropdownOpen) {
         !sizeDropdown.current.contains(e.target)
           ? setDropdownOpen(false)
-          : updateSizeInput({ variables: { input: e.target.innerText } }),
+          : client.writeData({ data: { sizeInput: e.target.innerText } }),
           setDropdownOpen(false);
       }
     };
@@ -51,7 +42,7 @@ const SizeInput = () => {
     <Fragment>
       <SizeContainer>
         <CurrentSize onMouseDown={() => setDropdownOpen(true)}>
-          <Size>{data?.searchPanel.sizeInput}</Size>
+          <Size>{data?.sizeInput}</Size>
           <Arrow />
         </CurrentSize>
         {dropdownOpen && (
@@ -60,6 +51,8 @@ const SizeInput = () => {
             <DropdownItem>24px</DropdownItem>
             <DropdownItem>30px</DropdownItem>
             <DropdownItem>36px</DropdownItem>
+            <DropdownItem>40px</DropdownItem>
+            <DropdownItem>64px</DropdownItem>
           </Dropdown>
         )}
       </SizeContainer>

@@ -1,19 +1,21 @@
 import React from "react";
-import { gql } from "apollo-boost";
-import { useMutation } from "@apollo/react-hooks";
 import { PreviewForm, Input } from "./PreviewInput.styles";
+import { useApolloClient } from "@apollo/react-hooks";
+import { gql } from "apollo-boost";
+import { useQuery } from "@apollo/react-hooks";
 
-const MUTATION = gql`
-  mutation UpdatePreviewInput($input: String!) {
-    updatePreviewInput(input: $input)
+const QUERY = gql`
+  query {
+    previewInput @client
   }
 `;
 
 const PreviewInput = () => {
-  const [updatePreviewInput] = useMutation(MUTATION);
+  const client = useApolloClient();
+  const { data } = useQuery(QUERY);
 
   return (
-    <PreviewForm>
+    <PreviewForm onSubmit={e => e.preventDefault()}>
       <Input
         type="search"
         placeholder="Type something"
@@ -21,8 +23,9 @@ const PreviewInput = () => {
         autoCorrect="off"
         autoCapitalize="off"
         spellcheck="off"
+        value={data?.previewInput}
         onChange={e =>
-          updatePreviewInput({ variables: { input: e.target.value } })
+          client.writeData({ data: { previewInput: e.target.value } })
         }
       />
     </PreviewForm>

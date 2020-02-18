@@ -8,7 +8,8 @@ export class FontsAPI extends RESTDataSource {
 
   async getFonts() {
     const { items } = await this.get("", {
-      key: 'AIzaSyCoxwazgrxEfIEQ2HnSZS5Xzc1ikX2gYZc'
+      sort: "popularity",
+      key: "AIzaSyCoxwazgrxEfIEQ2HnSZS5Xzc1ikX2gYZc",
     });
     return items;
   }

@@ -8,6 +8,7 @@ const Articles = () => {
       <Head>
         <title>Articles</title>
       </Head>
+      <h1>This is a blank boring page</h1>
     </Layout>
   );
 };

@@ -12,7 +12,7 @@ export const ScrollButton = styled.div`
   align-items: center;
   justify-content: center;
   position: fixed;
-  bottom: 60px;
+  bottom: 120px;
   right: 60px;
 `;
 

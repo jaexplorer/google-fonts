@@ -1,14 +1,14 @@
 import { ApolloServer } from "apollo-server-micro";
-import { schema } from "../../apollo/schema";
-import {FontsAPI} from "./FontsAPI";
+import { schema } from "./schema";
+import { FontsAPI } from "./FontsAPI";
 
 const dataSources = () => ({
-  fontsAPI: new FontsAPI()
+  fontsAPI: new FontsAPI(),
 });
 
 const apolloServer = new ApolloServer({
   schema,
-  dataSources
+  dataSources,
 });
 
 export const config = {
@@ -17,4 +17,4 @@ export const config = {
   },
 };
 
-export default apolloServer.createHandler({ path: "/api/graphql" });
+export default apolloServer.createHandler({ path: "/api/apolloServer/server" });

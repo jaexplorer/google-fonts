@@ -1,20 +1,22 @@
 import React from "react";
-import { gql } from "apollo-boost";
-import { useMutation } from "@apollo/react-hooks";
 import SearchIcon from "./SearchIcon";
 import { SearchForm, Input, IconContainer } from "./SearchInput.styles";
+import { gql } from "apollo-boost";
+import { useQuery } from "@apollo/react-hooks";
+import { useApolloClient } from "@apollo/react-hooks";
 
-const MUTATION = gql`
-  mutation UpdateSearchInput($input: String!) {
-    updateSearchInput(input: $input)
+const QUERY = gql`
+  query {
+    searchInput @client
   }
 `;
 
 const SearchInput = () => {
-  const [updateSearchInput] = useMutation(MUTATION);
+  const client = useApolloClient();
+  const { data } = useQuery(QUERY);
 
   return (
-    <SearchForm>
+    <SearchForm onSubmit={e => e.preventDefault()}>
       <IconContainer>
         <SearchIcon />
       </IconContainer>
@@ -25,8 +27,9 @@ const SearchInput = () => {
         autoCorrect="off"
         autoCapitalize="off"
         spellcheck="off"
+        value={data?.searchInput}
         onChange={e =>
-          updateSearchInput({ variables: { input: e.target.value } })
+          client.writeData({ data: { searchInput: e.target.value } })
         }
       />
     </SearchForm>

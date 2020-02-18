@@ -6,7 +6,7 @@ const TopButton = () => {
   const [showButton, setShowButton] = useState(false);
   useEffect(() => {
     window.onscroll = () => {
-      document.body.scrollTop > 20 || document.documentElement.scrollTop > 20
+      document.body.scrollTop > 50 || document.documentElement.scrollTop > 50
         ? setShowButton(true)
         : setShowButton(false);
     };

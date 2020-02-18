@@ -8,6 +8,7 @@ const Featured = () => {
       <Head>
         <title>Featured</title>
       </Head>
+      <h1>This is a blank boring page</h1>
     </Layout>
   );
 };

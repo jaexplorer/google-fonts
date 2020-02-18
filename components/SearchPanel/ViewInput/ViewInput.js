@@ -1,44 +1,30 @@
 import React from "react";
 import { ViewContainer, IconContainer } from "./ViewInput.styles";
 import { gql } from "apollo-boost";
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/react-hooks";
 import GridIcon from "./GridIcon";
 import ListIcon from "./ListIcon";
+import { useApolloClient } from "@apollo/react-hooks";
 
 const QUERY = gql`
-  query searchPanel {
-    searchPanel {
-      gridView
-    }
-  }
-`;
-
-const MUTATION = gql`
-  mutation ToggleView($id: String!, $gridView: Boolean!) {
-    toggleView(id: $id, gridView: $gridView) {
-      id
-      searchInput
-      previewInput
-      sizeInput
-      gridView
-    }
+  query {
+    gridView @client
   }
 `;
 
 const ViewInput = () => {
+  const client = useApolloClient();
+
   const { data } = useQuery(QUERY);
-  const [toggleView] = useMutation(MUTATION);
 
   return (
     <ViewContainer>
       <IconContainer
         onClick={() =>
-          toggleView({
-            variables: { id: "1", gridView: !data?.searchPanel.gridView },
-          })
+          client.writeData({ data: { gridView: !data?.gridView } })
         }
       >
-        {data?.searchPanel.gridView ? <GridIcon /> : <ListIcon />}
+        {data?.gridView ? <GridIcon /> : <ListIcon />}
       </IconContainer>
     </ViewContainer>
   );
