@@ -6,6 +6,7 @@ export const IconContainer = styled.div``;
 
 export const MobileNav = styled.div`
   display: none;
+
   @media screen and (max-width: 699px) {
     height: 65px;
     padding-left: 60px;
@@ -52,29 +53,13 @@ export const StyledNav = styled.div`
 
     &.closed {
       left: -350px;
-      &::before {
-        content: "";
-        position: absolute;
-        background: rgb(0, 0, 0, 0.4);
-        width: calc(100vw + 350px);
-        height: 100vh;
-        z-index: -1;
-        opacity: 0;
-        transition: all 0.6s cubic-bezier(0.4, 0.2, 0, 1);
-      }
+      z-index: 100;
+      pointer-events: none;
     }
     &.open {
       left: 0;
-
-      &::before {
-        content: "";
-        position: absolute;
-        background: rgb(0, 0, 0, 0.4);
-        width: calc(100vw + 350px);
-        height: 100vh;
-        z-index: -1;
-        opacity: 1;
-      }
+      z-index: 100;
+      pointer-events: all;
     }
   }
 `;
