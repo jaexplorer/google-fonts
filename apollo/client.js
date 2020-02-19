@@ -7,7 +7,7 @@ import { typeDefs } from "./typeDefs";
 export default withApollo(
   ({ initialState }) => {
     return new ApolloClient({
-      uri: "http://localhost:3000/api/apolloServer/server",
+      uri: "https://googlefonts.now.sh/api/apolloServer/server",
       cache: new InMemoryCache().restore(initialState || {}),
       clientState: {
         defaults: defaults,

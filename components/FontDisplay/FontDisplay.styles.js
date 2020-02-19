@@ -26,6 +26,11 @@ export const DisplayContainer = styled.div`
     }
   }
   @media screen and (max-width: 899px) {
-    grid-template-columns: 1fr;
+    &.grid {
+      grid-template-columns: 1fr;
+    }
+    &.list {
+      grid-template-columns: 1fr;
+    }
   }
 `;

@@ -7,6 +7,11 @@ export const PageContainer = styled.div`
   max-width: 1440px;
   margin: auto;
   position: relative;
+
+  @media screen and (max-width: 699px) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 `;
 
 export const Footer = styled.div`
